@@ -116,9 +116,125 @@ You may, optionally, self-host the relay Worker on your own Cloudflare account. 
 
 Priority goes to contributors who actively use the tool they want to integrate.
 
+## Troubleshooting
+
+Common issues seen during community testing, what causes them, and how to fix.
+
+### 🌐 Tunnel & connectivity
+
+<details>
+<summary><b>Phone shows "Cloudflare Error 1033" when scanning the QR</b></summary>
+
+**Cause:** The `cloudflared` client connected to Cloudflare's edge, but Cloudflare hasn't finished routing the quick-tunnel URL yet. Their own message warns *"it may take some time to be reachable."*
+
+**Fix:** Wait 30–60 seconds after the URL appears, then retry the scan. If it persists, run **GitOut: Stop** → **GitOut: Start** for a fresh URL.
+
+</details>
+
+<details>
+<summary><b>VS Code panel hangs on "Warming up the tunnel"</b></summary>
+
+**Cause:** If you're on v0.1.9 or older, `cloudflared` wasn't installed and the tunnel never came up. Fixed in **v0.1.10+** which auto-downloads the binary.
+
+**Fix:** Update the extension to the latest version. If still stuck on v0.1.10+, check the GitOut output channel (View → Output → "GitOut") for the actual error.
+
+</details>
+
+<details>
+<summary><b>Quick tunnels keep failing / corporate VPN blocks <code>*.trycloudflare.com</code></b></summary>
+
+**Cause:** Cloudflare's quick-tunnel pool is anonymous, best-effort infrastructure with no SLA. Many corporate networks also block outbound QUIC (port 443/UDP) which cloudflared uses by default.
+
+**Fix:** Deploy your own free Cloudflare Worker as a relay. Set `gitout.relayUrl` in VS Code settings to `wss://your-worker.workers.dev/agent`. Bypasses cloudflared entirely.
+
+</details>
+
+### 📳 Push notifications
+
+<details>
+<summary><b>Phone doesn't buzz when the PWA is open in the foreground</b></summary>
+
+**Cause:** iOS Safari and most Android browsers suppress Web Push banners when the app is already visible — they assume you're already looking at it.
+
+**Fix:** Test with the screen locked or the PWA backgrounded. Approval prompts (`PreToolUse`) use `requireInteraction: true` and are more likely to surface even in foreground.
+
+</details>
+
+<details>
+<summary><b>No notifications arrive at all, even with the screen locked</b></summary>
+
+**Cause:** Stale subscription. The agent has an old push endpoint that FCM/APNS still accepts but no longer delivers to your current device (common after clearing browser data, OS reset, or testing across multiple devices).
+
+**Fix:** On the phone PWA, tap the Unpair icon (top-right of Console) → re-enter the pairing code from the VS Code panel. A fresh subscription gets registered.
+
+</details>
+
+<details>
+<summary><b>iOS: no "Allow Notifications" prompt on Pair</b></summary>
+
+**Cause:** iOS only supports Web Push for PWAs **added to the Home Screen** (Apple's requirement, not ours). From a regular Safari tab, Pair will silently fail.
+
+**Fix:** In Safari with the PWA open → Share button → **Add to Home Screen** → Add. Close Safari. Reopen GitOut from the home-screen icon. Tap Pair again — notification prompt now appears.
+
+</details>
+
+### ✅ Approval flow
+
+<details>
+<summary><b>Claude does Write/Edit/Bash without my phone getting an approval prompt</b></summary>
+
+**Cause:** Missing the `PreToolUse` hook in `~/.claude/settings.json`. Common if you installed hooks via an older version of GitOut before that event existed.
+
+**Fix:** Run **GitOut: Install Claude Code Hooks** from the Command Palette. The command is idempotent — safe to re-run. Verify:
+```bash
+python3 -c "import json; print(list(json.load(open('$HOME/.claude/settings.json')).get('hooks',{}).keys()))"
+```
+Expected: `['Stop', 'Notification', 'PreToolUse']`.
+
+</details>
+
+<details>
+<summary><b>Tapped Approve, button stuck on "Approving…" forever</b></summary>
+
+**Cause:** You tapped a push that FCM/APNS had queued — by the time you saw it, the agent's 5-minute decision timer had expired and Claude Code already prompted locally instead. The phone's late decision can't resolve the dead `requestId`.
+
+**Fix:** Open Settings → Maintenance → **Clear** to wipe the stale cards. Retry with a fresh action that fires a new push.
+
+</details>
+
+### 📦 Installation
+
+<details>
+<summary><b>"Could not locate packages/agent" error popup</b></summary>
+
+**Cause:** You're on GitOut v0.1.7 or older — those versions only shipped the extension UI, not the agent code. Since the source repo is private, there was no recovery path.
+
+**Fix:** Update to **v0.1.8 or newer** from the Marketplace. The agent is bundled inside the .vsix now.
+
+</details>
+
+<details>
+<summary><b>After auto-updating, the extension still behaves like the old version</b></summary>
+
+**Cause:** VS Code caches loaded extension code in the extension-host process. A normal "Reload Window" doesn't always pick up the new bytes.
+
+**Fix:** Fully quit VS Code (`⌘Q` on macOS, `File → Exit` elsewhere) and reopen. Then verify the version in the Extensions panel.
+
+</details>
+
+### 🔍 Where to look first
+
+Before filing an issue, check the **GitOut output channel** in VS Code:
+
+1. `View → Output`
+2. In the dropdown on the right, select **GitOut**
+3. Scroll to the bottom — the agent logs every hook, push, tunnel event, and error here
+
+90% of issues show their root cause in this log.
+
 ## Issues & feedback
 
-Found a bug? Want a feature? File an [issue](https://github.com/AI-First-Community/gitout-public/issues/new/choose). See [CONTRIBUTING.md](CONTRIBUTING.md) for what info to include.
+Still stuck after Troubleshooting? File an [issue](https://github.com/AI-First-Community/gitout-public/issues/new/choose). See [CONTRIBUTING.md](CONTRIBUTING.md) for what info to include — and please paste the last 20 lines of the GitOut output channel.
 
 ---
 
