@@ -1,4 +1,4 @@
-# GitOut — phone control for Claude Code
+# GitOut — Remote Control for Claude Code
 
 **Live life. AI codes.**
 
