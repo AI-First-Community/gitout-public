@@ -100,6 +100,22 @@ You may, optionally, self-host the relay Worker on your own Cloudflare account. 
 - For the default zero-setup mode: nothing else
 - For the optional permanent URL mode: a free [Cloudflare](https://dash.cloudflare.com/sign-up) account
 
+## AI tools supported
+
+✅ **[Claude Code](https://docs.claude.com/en/docs/claude-code/getting-started)** — fully supported in the current release.
+
+🛣️ **Planned** (community-driven): Cursor, GitHub Copilot Chat, OpenAI Codex CLI, Gemini Code Assist, Aider, and others.
+
+**Want a different tool supported?** [Open an issue](https://github.com/AI-First-Community/gitout-public/issues/new?labels=tool-request&template=feature_request.md) describing which one — votes and demand are tracked publicly.
+
+**Want to *build* support for a tool?** The source for the agent / PWA / worker is in a private repository for now. To get collaborator access, email **`sanjeev.azad@gmail.com`** with:
+
+1. The AI tool you want to add (e.g., Cursor)
+2. Your GitHub handle
+3. A short note on what you'd build and your relevant experience
+
+Priority goes to contributors who actively use the tool they want to integrate.
+
 ## Issues & feedback
 
 Found a bug? Want a feature? File an [issue](https://github.com/AI-First-Community/gitout-public/issues/new/choose). See [CONTRIBUTING.md](CONTRIBUTING.md) for what info to include.
