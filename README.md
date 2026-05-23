@@ -1,6 +1,6 @@
 # GitOut — phone control for Claude Code
 
-**Live your life. Claude codes.**
+**Live life. AI codes.**
 
 GitOut is a free, open-source VS Code extension + Progressive Web App that lets you babysit Claude Code from your phone. Approve tool calls, answer questions, send follow-up instructions — all from anywhere.
 
