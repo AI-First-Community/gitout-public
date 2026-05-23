@@ -4,7 +4,7 @@
 
 GitOut is a free, open-source VS Code extension + Progressive Web App that lets you babysit Claude Code from your phone. Approve tool calls, answer questions, send follow-up instructions — all from anywhere.
 
-[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/sanjeev-azad.gitout?label=VS%20Code%20Marketplace&color=ff5630)](https://marketplace.visualstudio.com/items?itemName=sanjeev-azad.gitout)
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/innovate-with-sanjeev.gitout?label=VS%20Code%20Marketplace&color=ff5630)](https://marketplace.visualstudio.com/items?itemName=innovate-with-sanjeev.gitout)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Cost: Free](https://img.shields.io/badge/Cost-%240%20forever-2ea44f)](#cost-0-forever)
 
@@ -28,7 +28,7 @@ The maintainer of GitOut **operates no infrastructure**, **collects no data**, a
 2. Search **"GitOut"**
 3. Click **Install**
 
-Or install from the [Marketplace page](https://marketplace.visualstudio.com/items?itemName=sanjeev-azad.gitout).
+Or install from the [Marketplace page](https://marketplace.visualstudio.com/items?itemName=innovate-with-sanjeev.gitout).
 
 ## Quickstart (3 minutes)
 
